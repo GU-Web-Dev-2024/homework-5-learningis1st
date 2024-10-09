@@ -20,11 +20,53 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // Function to update the viewed artworks counter
+    function updateCounter() {
+        counter.textContent = `Artworks Viewed: ${viewedCount}`;
+    }
 
     // Add click event listener to each art panel
+    artPanels.forEach(panel => {
+        panel.addEventListener('click', () => {
+            if (!panel.classList.contains('viewed')) {
+                panel.classList.add('viewed');
+                panel.style.backgroundColor = '#ccc'; // change color to indicate viewed
+                viewedCount++;
+                updateCounter();
+            }
+        });
+    });
 
     // Add event listener to the reset button
+    resetButton.addEventListener('click', () => {
+        artPanels.forEach(panel => {
+            panel.classList.remove('viewed');
+            panel.style.backgroundColor = '#eee';
+        });
+        viewedCount = 0;
+        updateCounter();
+    });
 
     // Function to dynamically add a new art panel
+    addArtButton.addEventListener('click', () => {
+        const gallery = document.querySelector('.art-grid');
+        const randomArtwork = newArtworks[Math.floor(Math.random() * newArtworks.length)];
+        const newPanel = document.createElement('div');
+        newPanel.classList.add('art-panel');
+        newPanel.innerHTML = `
+            <img src="${randomArtwork.img}" alt="${randomArtwork.title}">
+            <p>${randomArtwork.title} by ${randomArtwork.artist}</p>
+        `;
+        gallery.appendChild(newPanel);
 
         // Add click event listener to the new art panel
+        newPanel.addEventListener('click', () => {
+            if (!newPanel.classList.contains('viewed')) {
+                newPanel.classList.add('viewed');
+                newPanel.style.backgroundColor = '#ccc'; // change color to indicate viewed
+                viewedCount++;
+                updateCounter();
+            }
+        });
+    });
+
+});
