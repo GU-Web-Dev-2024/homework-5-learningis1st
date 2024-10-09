@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add event listener to the reset button
     resetButton.addEventListener('click', () => {
-        artPanels.forEach(panel => {
+        const allArtPanels = document.querySelectorAll('.art-panel');
+        allArtPanels.forEach(panel => {
             panel.classList.remove('viewed');
             panel.style.backgroundColor = '#eee';
         });
